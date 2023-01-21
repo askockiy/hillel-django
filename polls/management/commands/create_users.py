@@ -1,4 +1,3 @@
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
@@ -21,9 +20,9 @@ class Command(BaseCommand):
         for i in range(total):
             user = User(
                 username=faker.first_name() + '_' + faker.last_name(),
-                email=faker.email(),
-                password=make_password(faker.password())
+                email=faker.email()
             )
+            user.set_password(faker.password())
             users.append(user)
 
         User.objects.bulk_create(users)
