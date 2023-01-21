@@ -4,5 +4,5 @@ exclude=
     migrations,
     tests.py,
     tests,
-    .venv
-    ,__pycache__
+    .venv,
+    __pycache__
