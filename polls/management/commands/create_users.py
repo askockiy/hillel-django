@@ -8,13 +8,15 @@ class Command(BaseCommand):
     description = 'Create random users'
 
     def add_arguments(self, parser):
-        parser.add_argument('total', type=int, help='Indicates the number of users to be created')
+        parser.add_argument(
+            'total',
+            type=int,
+            help='Indicates the number of users to be created',
+            choices=range(1, 11)
+        )
 
     def handle(self, *args, **kwargs):
         total = kwargs['total']
-        if total < 1 or total > 10:
-            raise ValueError('total must be between 1 and 10')
-
         faker = Faker()
         users = []
         for i in range(total):
