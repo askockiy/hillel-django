@@ -18,14 +18,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         total = kwargs['total']
         faker = Faker()
-        users = []
-        for i in range(total):
-            user = User(
-                username=faker.first_name() + '_' + faker.last_name(),
-                email=faker.email()
-            )
+        users = list(map(
+            lambda x: User(username=x.split("@")[0], email=x),
+            (faker.email() for _ in range(total))
+        ))
+        for user in users:
             user.set_password(faker.password())
-            users.append(user)
-
         User.objects.bulk_create(users)
         self.stdout.write(self.style.SUCCESS('Successfully created {} random users'.format(total)))
